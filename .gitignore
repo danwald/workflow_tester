@@ -1,0 +1,12 @@
+*.swp
+tags
+.DS_Store
+.notags
+Session.vim
+*main
+.python-version
+pw
+.flake8
+.isort.cfg
+pylintrc
+.pre-commit-config.yaml
