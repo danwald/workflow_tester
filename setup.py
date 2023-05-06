@@ -2,7 +2,9 @@
 
 """The setup script."""
 
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from setuptools import setup
+
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -12,7 +14,10 @@ with open('HISTORY.rst') as history_file:
 
 requirements = (
     'Click>=8.0',
-    'fastapi>=0.95.1'
+    'fastapi>=0.95.1',
+    'pydantic>=1.10.7',
+    'requests>=2.30.0',
+    'uvicorn>=0.22.0',
 )
 
 test_requirements = [
