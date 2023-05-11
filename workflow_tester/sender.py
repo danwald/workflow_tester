@@ -1,9 +1,12 @@
-"""Console script for workflow_tester."""
+import logging
 import sys
 import click
 import requests
 
-from content import Message
+import constants  # noqa F401
+import content
+
+logger = logging.getLogger(__name__)
 
 
 @click.command()
@@ -17,16 +20,16 @@ from content import Message
 @click.option('-h', '--headers', default=None, show_default=True)
 def main(to, frm, body, account_sid, sms_sid, sms_status, url, headers):
     """Console script for workflow_tester."""
-    message = Message(
+    message = content.Message(
         To=to, From=frm, Body=body, AccountSid=account_sid, SmsSid=sms_sid, SmsStatus=sms_status
     )
-    print(f'{message} --> {url}')
+    logger.debug(f'{message} --> {url}')
     response = requests.post(
         url,
         data=message.json(),
         headers={'Content-type': 'application/json', 'Accept': 'text/plain'}
     )
-    print(f'response: {response.status_code} {response.json()}')
+    logger.debug(f'response: {response.status_code} {response.json()}')
 
 
 if __name__ == "__main__":

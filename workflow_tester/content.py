@@ -1,10 +1,6 @@
 from datetime import date, datetime
-import os
 
 from pydantic import BaseModel, Field
-
-MSG_SSID = os.getenv('MSSID', 'foobar')
-SID = os.getenv('SID', 'foobar')
 
 
 class Message(BaseModel):

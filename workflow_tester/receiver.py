@@ -1,9 +1,13 @@
-
+import logging
 from fastapi import FastAPI
-import content
 from fastapi.responses import JSONResponse
 
+import constants
+import content
+
 app = FastAPI()
+
+logger = logging.getLogger(__name__)
 
 
 @app.get("/")
@@ -13,7 +17,7 @@ async def root():
 
 @app.post("/testMessage/")
 async def processIncomingMessage(message: content.Message) -> content.SMSResponse:
-    print(f'received: {message}')
+    logger.debug(f'received: {message}')
     return JSONResponse(
         content=content.TwilloSMSResponse(**{
             'acccountSid': message.AccountSid,
@@ -21,6 +25,6 @@ async def processIncomingMessage(message: content.Message) -> content.SMSRespons
             'from': message.From,
             'to': message.To,
             'uri': '/testMessage',
-            'messaging_service_sid': content.MSG_SSID,
-            'sid': content.SID,
+            'messaging_service_sid': constants.MSG_SSID,
+            'sid': constants.SID,
         }).json())
