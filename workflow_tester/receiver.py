@@ -1,6 +1,7 @@
-"""Console script for workflow_tester."""
+
 from fastapi import FastAPI
 import content
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
@@ -11,6 +12,15 @@ async def root():
 
 
 @app.post("/testMessage/")
-async def processIncomingMessage(message: content.Message):
+async def processIncomingMessage(message: content.Message) -> content.SMSResponse:
     print(f'received: {message}')
-    return message
+    return JSONResponse(
+        content=content.TwilloSMSResponse(**{
+            'acccountSid': message.AccountSid,
+            'body': message.Body,
+            'from': message.From,
+            'to': message.To,
+            'uri': '/testMessage',
+            'messaging_service_sid': content.MSG_SSID,
+            'sid': content.SID,
+        }).json())

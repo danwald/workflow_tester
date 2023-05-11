@@ -5,6 +5,7 @@ import requests
 
 from content import Message
 
+
 @click.command()
 @click.option('-t', '--to', required=True)
 @click.option('-f', '--frm', required=True)
@@ -19,8 +20,13 @@ def main(to, frm, body, account_sid, sms_sid, sms_status, url, headers):
     message = Message(
         To=to, From=frm, Body=body, AccountSid=account_sid, SmsSid=sms_sid, SmsStatus=sms_status
     )
-    print(f'{message} -> {url}')
-    return 0
+    print(f'{message} --> {url}')
+    response = requests.post(
+        url,
+        data=message.json(),
+        headers={'Content-type': 'application/json', 'Accept': 'text/plain'}
+    )
+    print(f'response: {response.status_code} {response.json()}')
 
 
 if __name__ == "__main__":
