@@ -2,9 +2,9 @@ from collections import defaultdict
 import typing
 import dataclasses
 import logging
-import constants  # noqa F401
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(level='DEBUG', format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 @dataclasses.dataclass

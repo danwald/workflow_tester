@@ -3,7 +3,6 @@ import sys
 import click
 import requests
 
-import constants  # noqa F401
 import content
 
 logger = logging.getLogger(__name__)

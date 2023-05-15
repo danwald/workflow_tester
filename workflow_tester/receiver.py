@@ -2,17 +2,18 @@ import logging
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-import constants
 import content
+import config
 
 app = FastAPI()
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(level='DEBUG', format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return config.get_settings()
 
 
 @app.post("/testMessage/")
@@ -25,6 +26,6 @@ async def processIncomingMessage(message: content.Message) -> content.SMSRespons
             'from': message.From,
             'to': message.To,
             'uri': '/testMessage',
-            'messaging_service_sid': constants.MSG_SSID,
-            'sid': constants.SID,
+            'messaging_service_sid': config.get_settings().mss,
+            'sid': config.get_settings().sid,
         }).json())
