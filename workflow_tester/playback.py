@@ -14,15 +14,19 @@ class Cursor:
 
 
 class Player:
-    def __init__(self, filename: str):
+    def __init__(self, filename: str) -> None:
+        self.filename = filename
         self.tape = self._load_tape(filename)
         self.head = defaultdict(int)
 
+    def __str__(self) -> str:
+        return f'Player loaded `{self.filename}` @ { {k:v for k,v in self.head.items()} }'
+
     @staticmethod
-    def interaction_key(event, user) -> str:
+    def interaction_key(event: str, user: str) -> str:
         return f'{event}:{user}'
 
-    def get_n_advance_interaction(self, event, user) -> typing.Optional[Cursor]:
+    def get_n_advance_interaction(self, event: str, user: str) -> typing.Optional[Cursor]:
         interaction = self.interaction_key(event, user)
         pos = self.head[interaction]
         self.head[interaction] += 1
@@ -31,7 +35,7 @@ class Player:
         except IndexError:
             return None
 
-    def _load_tape(self, filename) -> defaultdict[str, typing.List[Cursor]]:
+    def _load_tape(self, filename: str) -> defaultdict[str, typing.List[Cursor]]:
         spool = defaultdict(list)
         with open(filename) as fp:
             for line in fp:

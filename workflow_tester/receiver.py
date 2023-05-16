@@ -13,7 +13,7 @@ logging.basicConfig(level='DEBUG', format='%(asctime)s - %(levelname)s - %(messa
 
 @app.get("/")
 async def root():
-    return config.get_settings()
+    return config.get_config()
 
 
 @app.post("/testMessage/")
